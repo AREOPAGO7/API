@@ -1,15 +1,22 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import User from '../models/User.js';
-
+import cors from 'cors';
 const app = express();
 app.use(express.json());
+
+app.use(cors({
+  origin: ['http://localhost:3000'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  allowedHeaders: ['Content-Type'] 
+}));
+
 
 mongoose.connect('mongodb+srv://anass:anass0987@api.46t4n.mongodb.net/?retryWrites=true&w=majority&appName=API')
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error('Could not connect to MongoDB...', err));
 
-app.post('/user', async (req, res) => {
+app.post('/users', async (req, res) => {
   try {
     const newUser = new User({
       fullName: req.body.fullName,
