@@ -33,7 +33,7 @@ app.post('/users', async (req, res) => {
 
 app.get('/users', async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find({}, '_id fullName password email age');
     res.json(users);
   } catch (err) {
     res.status(500).send('Error fetching users');
@@ -61,6 +61,6 @@ app.delete('/users/:id', async (req, res) => {
     }
   });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log('Server is running on port 3000');
 });
